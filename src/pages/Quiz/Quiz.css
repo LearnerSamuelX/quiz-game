@@ -11,12 +11,19 @@
 }
 
 .question-frame {
-    border: 2.5px white solid;
+    position: relative;
 }
 
 .question-frame img {
-    width: 30rem;
+    height: 25rem;
 }
+
+.timer-frame {
+    position: absolute;
+    top: 5rem;
+    right: 2.5rem;
+}
+
 
 .option-frame {
     list-style-type: none;

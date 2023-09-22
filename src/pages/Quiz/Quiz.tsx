@@ -71,6 +71,9 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
                         <div className="question-frame">
                             <h1>Quiz {questionIndex}/{quizList.length}</h1>
                             <img src={quizList[questionIndex - 1].imageUrl} alt={"question" + questionIndex.toString()}></img>
+                            <div className="timer-frame">
+                                <h2>{timer}</h2>
+                            </div>
                             <p>{quizList[questionIndex - 1].question}</p>
                             <ul className="option-frame">
                                 {options.map((item, index) => {
