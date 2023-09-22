@@ -9,7 +9,7 @@ interface QuizProps {
 const Quiz = ({ quizList }: QuizProps): JSX.Element => {
 
     const [questionIndex, setQuestionIndex] = useState(1)
-    const [imgloaded, setImageLoaded] = useState(true)
+    const [imgloaded, setImageLoaded] = useState(false)
     const [timer, setTimer] = useState(10)
 
     let options = quizList[questionIndex - 1].options
@@ -24,23 +24,26 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
             }
         }
 
-        loadImage()
         console.log(timer)
-
         if (timer === 0) {
-            console.log("submitting the selection")
-
+            console.log("submitting...")
             let submission = setTimeout(() => {
                 if (questionIndex < quizList.length) {
+
+                    setTimer((prevState) => {
+                        return prevState + 10
+                    })
+
+                    setImageLoaded((prevState) => {
+                        return prevState = false
+                    })
+
                     setQuestionIndex((prevState) => {
-                        setTimer((prevState) => {
-                            return prevState + 10
-                        })
+                        console.log("submitted!")
                         return prevState + 1
                     })
                 }
-            }, 1500)
-
+            }, 2500)
             return () => clearTimeout(submission)
         }
 
@@ -53,6 +56,8 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
                 })
             }
         }, 1000)
+
+        loadImage()
 
         return () => clearTimeout(countDown)
     }, [questionIndex, quizList, timer])
@@ -73,7 +78,7 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
                                 })}
                             </ul>
                         </div>
-                    ) : (<div></div>)}
+                    ) : (<div><h1>Loading......</h1></div>)}
                 </div>
             </div>
         </div >
