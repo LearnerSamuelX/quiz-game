@@ -10,9 +10,21 @@
     color: white;
 }
 
-.option-frame p {
+.option-frame {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.option-frame li {
     padding-top: 10px;
     padding-bottom: 10px;
     border: white 2.5px solid;
     text-align: left;
+    list-style-type: none;
+    width: 22.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-bottom: 15px;
 }
