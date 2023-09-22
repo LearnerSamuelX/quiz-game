@@ -47,7 +47,6 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
             return () => clearTimeout(submission)
         }
 
-
         let countDown = setTimeout(() => {
             if (timer > 0) {
                 setTimer((prevState) => {

@@ -24,7 +24,6 @@
     right: 2.5rem;
 }
 
-
 .option-frame {
     list-style-type: none;
     margin: 0;
@@ -35,6 +34,9 @@
     padding-top: 10px;
     padding-bottom: 10px;
     border: white 2.5px solid;
+    border-radius: 20px;
+    background-color: white;
+    color: black;
     text-align: left;
     list-style-type: none;
     width: 22.5rem;
