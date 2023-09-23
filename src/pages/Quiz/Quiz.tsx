@@ -54,12 +54,12 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
                     setQuestionIndex((prevState) => {
                         return prevState + 1
                     })
-
-                    // reset selectedAnswer for the next question
-                    setSelectedAnswer((prevState) => {
-                        return prevState = -1
-                    })
                 }
+
+                // reset selectedAnswer for the next question
+                setSelectedAnswer((prevState) => {
+                    return prevState = -1
+                })
             }, 2500)
 
             return () => {
