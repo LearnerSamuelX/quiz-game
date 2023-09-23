@@ -1,6 +1,7 @@
 import './Quiz.css'
 import { QuizInfo } from '../../models/quizModel';
 import { useState, useEffect } from 'react';
+import ReportCard from '../ReportCard/ReportCard';
 
 interface QuizProps {
     quizList: QuizInfo[];
@@ -12,6 +13,8 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
     const [imgloaded, setImageLoaded] = useState(false)
     const [timer, setTimer] = useState(10)
     const [selectedAnswer, setSelectedAnswer] = useState(-1)
+    const [correctAnswer, setCorrectAnswer] = useState(0)
+    const [completed, setCompleted] = useState(false)
 
     let options = quizList[questionIndex - 1].options
 
@@ -31,6 +34,13 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
             finalSubmission()
 
             let submission = setTimeout(() => {
+                if (questionIndex === quizList.length) {
+                    console.log("Goes to report card page")
+                    setCompleted((prevState) => {
+                        return prevState = true
+                    })
+                }
+
                 if (questionIndex < quizList.length) {
 
                     setTimer((prevState) => {
@@ -69,7 +79,7 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
         loadImage()
 
         return () => clearTimeout(countDown)
-    }, [questionIndex, timer])
+    }, [questionIndex, timer, completed])
 
     const selection = (index: number) => {
         if (timer !== 0) {
@@ -114,6 +124,9 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
             }
         } else {
             //got it right
+            setCorrectAnswer((prevState) => {
+                return prevState + 1
+            })
             let correctOption = document.querySelector<HTMLElement>(".selection-" + selectedAnswer)
             if (correctOption) {
                 correctOption.style.border = "rgb(155, 255, 155) 2.5px solid"
@@ -124,26 +137,31 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
 
 
     return (
+
         <div className="Quiz">
-            <div className="App-header">
-                <div className="quiz-body">
-                    {imgloaded ? (
-                        <div className="question-frame">
-                            <h1>Quiz {questionIndex}/{quizList.length}</h1>
-                            <img src={quizList[questionIndex - 1].imageUrl} alt={"question" + questionIndex.toString()}></img>
-                            <div className="timer-frame">
-                                <h2>{timer}</h2>
+            {!completed ? (
+                <div className="App-header">
+                    <div className="quiz-body">
+                        {imgloaded ? (
+                            <div className="question-frame">
+                                <h1>Quiz {questionIndex}/{quizList.length}</h1>
+                                <img src={quizList[questionIndex - 1].imageUrl} alt={"question" + questionIndex.toString()}></img>
+                                <div className="timer-frame">
+                                    <h2>{timer}</h2>
+                                </div>
+                                <p>{quizList[questionIndex - 1].question}</p>
+                                <ul className="option-frame">
+                                    {options.map((item, index) => {
+                                        return <li onClick={() => { selection(index) }} className={"selection-" + index} key={"selection-" + index}>{item}</li>
+                                    })}
+                                </ul>
                             </div>
-                            <p>{quizList[questionIndex - 1].question}</p>
-                            <ul className="option-frame">
-                                {options.map((item, index) => {
-                                    return <li onClick={() => { selection(index) }} className={"selection-" + index} key={"selection-" + index}>{item}</li>
-                                })}
-                            </ul>
-                        </div>
-                    ) : (<div><h1>Loading......</h1></div>)}
+                        ) : (<div><h1>Loading......</h1></div>)}
+                    </div>
                 </div>
-            </div>
+            ) :
+                <ReportCard correct={correctAnswer} total={quizList.length} />
+            }
         </div >
     )
 }
