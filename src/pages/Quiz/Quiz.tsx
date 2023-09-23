@@ -11,6 +11,7 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
     const [questionIndex, setQuestionIndex] = useState(1)
     const [imgloaded, setImageLoaded] = useState(false)
     const [timer, setTimer] = useState(10)
+    const [selectedAnswer, setSelectedAnswer] = useState(-1)
 
     let options = quizList[questionIndex - 1].options
 
@@ -27,6 +28,8 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
         console.log(timer)
         if (timer === 0) {
             console.log("submitting...")
+            finalSubmission()
+
             let submission = setTimeout(() => {
                 if (questionIndex < quizList.length) {
 
@@ -39,12 +42,19 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
                     })
 
                     setQuestionIndex((prevState) => {
-                        console.log("submitted!")
                         return prevState + 1
+                    })
+
+                    // reset selectedAnswer for the next question
+                    setSelectedAnswer((prevState) => {
+                        return prevState = -1
                     })
                 }
             }, 2500)
-            return () => clearTimeout(submission)
+
+            return () => {
+                clearTimeout(submission)
+            }
         }
 
         let countDown = setTimeout(() => {
@@ -59,7 +69,58 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
         loadImage()
 
         return () => clearTimeout(countDown)
-    }, [questionIndex, quizList, timer])
+    }, [questionIndex, timer])
+
+    const selection = (index: number) => {
+        if (timer !== 0) {
+            console.log("option " + index + " has been selected")
+            // reset the background color for all
+
+            let listNodes = document.querySelectorAll("li")
+            for (let i = 0; i < listNodes.length; i++) {
+                let listNode = listNodes[i]
+                listNode.style.border = "white 2.5px solid";
+                listNode.style.background = "white";
+            }
+
+            // change the color of the selected button
+            let selectedButton = document.querySelector<HTMLElement>(".selection-" + index)
+            if (selectedButton) {
+                selectedButton.style.border = "yellow 2.5px solid"
+                selectedButton.style.background = "yellow"
+
+            }
+
+            setSelectedAnswer((prevState) => {
+                prevState = index
+                return prevState
+            })
+        }
+    }
+
+    const finalSubmission = () => {
+        let correctAnswer = quizList[questionIndex - 1].answer
+        if (selectedAnswer !== correctAnswer) {
+            let selectedOption = document.querySelector<HTMLElement>(".selection-" + selectedAnswer)
+            if (selectedOption) {
+                selectedOption.style.border = "red 2.5px solid"
+                selectedOption.style.background = "red"
+            }
+
+            let correctOption = document.querySelector<HTMLElement>(".selection-" + correctAnswer)
+            if (correctOption) {
+                correctOption.style.border = "green 2.5px solid"
+                correctOption.style.background = "green"
+            }
+        } else {
+            //got it right
+            let correctOption = document.querySelector<HTMLElement>(".selection-" + selectedAnswer)
+            if (correctOption) {
+                correctOption.style.border = "rgb(155, 255, 155) 2.5px solid"
+                correctOption.style.background = "rgb(155, 255, 155)"
+            }
+        }
+    }
 
 
     return (
@@ -76,7 +137,7 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
                             <p>{quizList[questionIndex - 1].question}</p>
                             <ul className="option-frame">
                                 {options.map((item, index) => {
-                                    return <li className={"selection-" + index} key={"selection-" + index}>{item}</li>
+                                    return <li onClick={() => { selection(index) }} className={"selection-" + index} key={"selection-" + index}>{item}</li>
                                 })}
                             </ul>
                         </div>

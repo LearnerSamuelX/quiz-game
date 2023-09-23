@@ -13,8 +13,6 @@ const App = () => {
   const [quizInfo, setQuizInfo] = useState([])
 
   useEffect(() => {
-
-
     let splash = setTimeout(() => {
       if (!initilized) {
         setInitialized((prev) => {
@@ -45,18 +43,13 @@ const App = () => {
   }, [quizInfo, loaded, initilized])
 
 
-  if (!initilized) {
-    return (
-      <Greeting message='Welcome to the Quiz Game' />
-    )
-  }
-  else {
-    return (
-      <div>
-        <Quiz quizList={quizInfo} />
-      </div>
-    );
-  }
+  return (
+    <div>
+      {
+        initilized ? (<Quiz quizList={quizInfo} />) : (<Greeting message='Welcome to the Quiz Game' />)
+      }
+    </div>
+  )
 }
 
 export default App;
