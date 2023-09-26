@@ -14,6 +14,7 @@ export const hoverEffect = (timer: number, selectedAnswer: number, key: number) 
             if (hoveredOption) {
                 hoveredOption.style.border = "grey 2.5px solid"
                 hoveredOption.style.background = "grey"
+                hoveredOption.style.transition = "background-color 0.5s ease, border 0.5s ease"
             }
         }
     }

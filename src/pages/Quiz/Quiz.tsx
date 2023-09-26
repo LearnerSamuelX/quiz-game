@@ -107,6 +107,7 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
             if (selectedButton) {
                 selectedButton.style.border = "yellow 2.5px solid"
                 selectedButton.style.background = "yellow"
+                selectedButton.style.transition = "none"
             }
 
             setSelectedAnswer((prevState) => {
@@ -126,6 +127,7 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
                 option.style.border = "white 2.5px solid"
                 option.style.background = "white"
                 option.style.color = "rgb(153,153,153)"
+                option.style.transition = "none"
             }
         }
 
@@ -138,12 +140,14 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
             if (selectedOption) {
                 selectedOption.style.border = "red 2.5px solid"
                 selectedOption.style.background = "red"
+                selectedOption.style.transition = "none"
             }
 
             let correctOption = document.querySelector<HTMLElement>(".selection-" + correctAnswer)
             if (correctOption) {
                 correctOption.style.border = "green 2.5px solid"
                 correctOption.style.background = "green"
+                correctOption.style.transition = "none"
             }
         } else {
             //got it right
