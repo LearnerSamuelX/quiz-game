@@ -6,7 +6,7 @@ interface ActivateProps {
     activated: number
 }
 
-const WrongCross = ({ id, activated }: ActivateProps) => {
+const WrongCross = ({ id, activated }: ActivateProps): JSX.Element => {
 
     useEffect(() => {
         if (activated === id) {

@@ -22,7 +22,8 @@
 }
 
 .timer-glass p {
+    font-size: 25px;
     position: relative;
-    top: -1.0rem;
+    top: -0.5rem;
     color: black;
 }

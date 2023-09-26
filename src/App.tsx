@@ -11,6 +11,7 @@ const App = () => {
   const [initilized, setInitialized] = useState(false)
   const [loaded, setLoaded] = useState(false)
   const [quizInfo, setQuizInfo] = useState([])
+  const [serverError, setServerError] = useState(false)
 
   useEffect(() => {
     let splash = setTimeout(() => {
@@ -24,12 +25,18 @@ const App = () => {
     const fetchData = async () => {
       let quiz_url = process.env['REACT_APP_QUIZ_URL']
       if (quiz_url) {
-        let { data } = await axios.get(quiz_url)
-        setQuizInfo(data)
-        setLoaded((prev) => {
-          prev = true
-          return prev
-        })
+        try {
+          let { data } = await axios.get(quiz_url)
+          setQuizInfo(data)
+          setLoaded((prev) => {
+            prev = true
+            return prev
+          })
+        } catch (err) {
+          setServerError((prevState) => {
+            return prevState = true
+          })
+        }
       }
     }
 
@@ -39,13 +46,17 @@ const App = () => {
 
     return () => clearTimeout(splash)
 
-  }, [quizInfo, loaded, initilized])
+  }, [quizInfo, loaded, initilized, serverError])
 
 
   return (
     <div>
       {
-        initilized ? (<Quiz quizList={quizInfo} />) : (<Greeting message='Welcome to the Quiz Game' />)
+        serverError ? (
+          <div className="error-info-container">
+            <h2>Server Error</h2>
+          </div>
+        ) : initilized ? (<Quiz quizList={quizInfo} />) : (<Greeting message='Welcome to the Quiz Game' />)
       }
     </div>
   )

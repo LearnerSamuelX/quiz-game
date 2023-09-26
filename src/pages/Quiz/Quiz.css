@@ -16,6 +16,7 @@
 
 .question-frame img {
     height: 25rem;
+    width: 100%;
 }
 
 .option-frame {
@@ -27,7 +28,7 @@
 .option-container {
     display: flex;
     flex-direction: row;
-    width: 30rem;
+    width: 25rem;
     margin-left: auto;
     margin-right: auto;
 }

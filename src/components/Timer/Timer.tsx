@@ -5,7 +5,7 @@ interface TimerProps {
     timer: number
 }
 
-const Timer = ({ timer }: TimerProps) => {
+const Timer = ({ timer }: TimerProps): JSX.Element => {
 
     useEffect(() => {
         let clock = document.querySelector<HTMLElement>(".timer-frame")

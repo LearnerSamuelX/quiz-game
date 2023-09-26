@@ -6,8 +6,7 @@ interface ActivateProps {
     activated: number
 }
 
-
-const CheckMark = ({ id, activated }: ActivateProps) => {
+const CheckMark = ({ id, activated }: ActivateProps): JSX.Element => {
 
     useEffect(() => {
 
