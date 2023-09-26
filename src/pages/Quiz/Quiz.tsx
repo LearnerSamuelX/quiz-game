@@ -18,6 +18,7 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
     const [correctAnswer, setCorrectAnswer] = useState(0)
     const [completed, setCompleted] = useState(false)
     const [wrongAnswerCheck, setWrongAnswerCheck] = useState(-1)
+    const [rightAnswerCheck, setRightAnswerCheck] = useState(-1)
 
     let options = quizList[questionIndex - 1].options
 
@@ -65,6 +66,10 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
                 })
 
                 setWrongAnswerCheck((prevState) => {
+                    return prevState = -1
+                })
+
+                setRightAnswerCheck((prevState) => {
                     return prevState = -1
                 })
             }, 2500)
@@ -138,6 +143,10 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
             setCorrectAnswer((prevState) => {
                 return prevState + 1
             })
+
+            setRightAnswerCheck((prevState) => {
+                return prevState = selectedAnswer
+            })
             let correctOption = document.querySelector<HTMLElement>(".selection-" + selectedAnswer)
             if (correctOption) {
                 correctOption.style.border = "rgb(155, 255, 155) 2.5px solid"
@@ -163,10 +172,10 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
                                 <p>{quizList[questionIndex - 1].question}</p>
                                 <ul className="option-frame">
                                     {options.map((item, index) => {
-                                        return <div className="option-container">
+                                        return <div key={"key-" + index} className="option-container">
                                             <WrongCross id={index} activated={wrongAnswerCheck} />
                                             <li onClick={() => { selection(index) }} className={"selection-" + index} key={"selection-" + index}>{item}</li>
-                                            <CheckMark />
+                                            <CheckMark id={index} activated={rightAnswerCheck} />
                                         </div>
                                     })}
                                 </ul>

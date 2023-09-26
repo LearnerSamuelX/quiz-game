@@ -1,7 +1,27 @@
 .checkmark-container {
-    border: greenyellow 2.5px solid;
-    font-size: 15px;
-    text-align: center;
+
     height: 40px;
-    margin-left: 5px;
+    position: relative;
+    top: 1rem;
+    left: 1rem;
+}
+
+.checkmark_stem {
+    position: absolute;
+    border: 2.5px #282c34 solid;
+    background-color: #282c34;
+    width: 2px;
+    height: 20px;
+    transform: rotate(135deg);
+}
+
+.checkmark_kick {
+    position: absolute;
+    border: 2.5px #282c34 solid;
+    background-color: #282c34;
+    width: 2px;
+    height: 30px;
+    transform: rotate(45deg);
+    top: -7.5px;
+    left: 17px;
 }
