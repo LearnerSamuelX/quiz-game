@@ -9,9 +9,12 @@ const Timer = ({ timer }: TimerProps) => {
 
     useEffect(() => {
         let clock = document.querySelector<HTMLElement>(".timer-frame")
-        let degree = 360 + 360 / 11 - 360 / 11 * (timer + 1)
+        let degree = 360 - 360 / 11 * timer
         if (clock) {
-            let modifier = "conic-gradient(rgb(222, 237, 47) " + degree + "deg, grey 0deg)"
+            let red = 222 + Math.abs(timer - 10) * (255 - 222) / 11
+            let green = 237 + Math.abs(timer - 10) * (55 - 237) / 11
+            let blue = 47 + Math.abs(timer - 10) * (55 - 47) / 11
+            let modifier = `conic-gradient(rgb(${red}, ${green}, ${blue}) ` + degree + "deg, grey 0deg)"
             clock.style.background = modifier
         }
     }, [timer])
