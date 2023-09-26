@@ -1,0 +1,7 @@
+.checkmark-container {
+    border: greenyellow 2.5px solid;
+    font-size: 15px;
+    text-align: center;
+    height: 40px;
+    margin-left: 5px;
+}

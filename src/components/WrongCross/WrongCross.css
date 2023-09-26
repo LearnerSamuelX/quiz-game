@@ -1,0 +1,28 @@
+.wrongcross-container {
+    font-size: 15px;
+    text-align: center;
+    height: 40px;
+    margin-right: 5px;
+    position: relative;
+    top: 1rem;
+    right: 1rem;
+}
+
+.wrong-cross-1 {
+    position: absolute;
+    border: 2.5px #282c34 solid;
+    background-color: #282c34;
+    ;
+    width: 2px;
+    height: 20px;
+    transform: rotate(45deg);
+}
+
+.wrong-cross-2 {
+    position: absolute;
+    border: 2.5px #282c34 solid;
+    background-color: #282c34;
+    width: 2px;
+    height: 20px;
+    transform: rotate(135deg);
+}

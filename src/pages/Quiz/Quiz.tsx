@@ -2,6 +2,8 @@ import './Quiz.css'
 import { QuizInfo } from '../../models/quizModel';
 import { useState, useEffect } from 'react';
 import ReportCard from '../ReportCard/ReportCard';
+import CheckMark from '../../components/CheckMark/CheckMark';
+import WrongCross from '../../components/WrongCross/WrongCross';
 
 interface QuizProps {
     quizList: QuizInfo[];
@@ -15,6 +17,7 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
     const [selectedAnswer, setSelectedAnswer] = useState(-1)
     const [correctAnswer, setCorrectAnswer] = useState(0)
     const [completed, setCompleted] = useState(false)
+    const [wrongAnswerCheck, setWrongAnswerCheck] = useState(-1)
 
     let options = quizList[questionIndex - 1].options
 
@@ -58,6 +61,10 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
 
                 // reset selectedAnswer for the next question
                 setSelectedAnswer((prevState) => {
+                    return prevState = -1
+                })
+
+                setWrongAnswerCheck((prevState) => {
                     return prevState = -1
                 })
             }, 2500)
@@ -111,6 +118,10 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
     const finalSubmission = () => {
         let correctAnswer = quizList[questionIndex - 1].answer
         if (selectedAnswer !== correctAnswer) {
+            setWrongAnswerCheck((prevState) => {
+                return prevState = selectedAnswer
+            })
+
             let selectedOption = document.querySelector<HTMLElement>(".selection-" + selectedAnswer)
             if (selectedOption) {
                 selectedOption.style.border = "red 2.5px solid"
@@ -152,7 +163,11 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
                                 <p>{quizList[questionIndex - 1].question}</p>
                                 <ul className="option-frame">
                                     {options.map((item, index) => {
-                                        return <li onClick={() => { selection(index) }} className={"selection-" + index} key={"selection-" + index}>{item}</li>
+                                        return <div className="option-container">
+                                            <WrongCross id={index} activated={wrongAnswerCheck} />
+                                            <li onClick={() => { selection(index) }} className={"selection-" + index} key={"selection-" + index}>{item}</li>
+                                            <CheckMark />
+                                        </div>
                                     })}
                                 </ul>
                             </div>

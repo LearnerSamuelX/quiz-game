@@ -30,6 +30,14 @@
     padding: 0;
 }
 
+.option-container {
+    display: flex;
+    flex-direction: row;
+    width: 30rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .option-frame li {
     padding-top: 10px;
     padding-bottom: 10px;
