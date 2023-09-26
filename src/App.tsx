@@ -25,7 +25,6 @@ const App = () => {
       let quiz_url = process.env['REACT_APP_QUIZ_URL']
       if (quiz_url) {
         let { data } = await axios.get(quiz_url)
-        console.log(data)
         setQuizInfo(data)
         setLoaded((prev) => {
           prev = true

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import ReportCard from '../ReportCard/ReportCard';
 import CheckMark from '../../components/CheckMark/CheckMark';
 import WrongCross from '../../components/WrongCross/WrongCross';
+import { hoverEffect, leaveEffect } from './HoverEffectFunctions';
 
 interface QuizProps {
     quizList: QuizInfo[];
@@ -32,14 +33,11 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
             }
         }
 
-        console.log(timer)
         if (timer === 0) {
-            console.log("submitting...")
             finalSubmission()
 
             let submission = setTimeout(() => {
                 if (questionIndex === quizList.length) {
-                    console.log("Goes to report card page")
                     setCompleted((prevState) => {
                         return prevState = true
                     })
@@ -95,9 +93,7 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
 
     const selection = (index: number) => {
         if (timer !== 0) {
-            console.log("option " + index + " has been selected")
             // reset the background color for all
-
             let listNodes = document.querySelectorAll("li")
             for (let i = 0; i < listNodes.length; i++) {
                 let listNode = listNodes[i]
@@ -110,7 +106,6 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
             if (selectedButton) {
                 selectedButton.style.border = "yellow 2.5px solid"
                 selectedButton.style.background = "yellow"
-
             }
 
             setSelectedAnswer((prevState) => {
@@ -165,44 +160,7 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
         }
     }
 
-    const hoverEffect = (key: number) => {
-        if (timer !== 0) {
-            let options = document.querySelectorAll("li")
-            for (let i = 0; i < options.length; i++) {
-                if (i !== selectedAnswer) {
-                    let option = options[i]
-                    option.style.border = "white 2.5px solid"
-                    option.style.background = "white"
-                }
-            }
-
-            if (key !== selectedAnswer) {
-                console.log("mouse over detected on " + key)
-                let hoveredOption = document.querySelector<HTMLElement>(".selection-" + key)
-                if (hoveredOption) {
-                    hoveredOption.style.border = "grey 2.5px solid"
-                    hoveredOption.style.background = "grey"
-                }
-            }
-        }
-    }
-
-    const leaveEffect = (key: number) => {
-        if (timer !== 0) {
-            if (key !== selectedAnswer) {
-                console.log("leaving option: " + key)
-                let hoveredOption = document.querySelector<HTMLElement>(".selection-" + key)
-                if (hoveredOption) {
-                    hoveredOption.style.border = "white 2.5px solid"
-                    hoveredOption.style.background = "white"
-                }
-            }
-        }
-    }
-
-
     return (
-
         <div className="Quiz">
             {!completed ? (
                 <div className="App-header">
@@ -219,7 +177,7 @@ const Quiz = ({ quizList }: QuizProps): JSX.Element => {
                                     {options.map((item, index) => {
                                         return <div key={"key-" + index} className="option-container">
                                             <WrongCross id={index} activated={wrongAnswerCheck} />
-                                            <li onMouseOver={() => { hoverEffect(index) }} onMouseLeave={() => { leaveEffect(index) }} onClick={() => { selection(index) }} className={"selection-" + index} key={"selection-" + index}>{item}</li>
+                                            <li onMouseOver={() => { hoverEffect(timer, selectedAnswer, index) }} onMouseLeave={() => { leaveEffect(timer, selectedAnswer, index) }} onClick={() => { selection(index) }} className={"selection-" + index} key={"selection-" + index}>{item}</li>
                                             <CheckMark id={index} activated={rightAnswerCheck} />
                                         </div>
                                     })}
